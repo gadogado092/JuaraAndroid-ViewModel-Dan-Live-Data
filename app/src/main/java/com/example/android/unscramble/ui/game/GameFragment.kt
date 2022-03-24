@@ -68,9 +68,9 @@ class GameFragment : Fragment() {
         binding.skip.setOnClickListener { onSkipWord() }
         // Update the UI
         updateNextWordOnScreen()
-        binding.score.text = getString(R.string.score, 0)
+        binding.score.text = getString(R.string.score, viewModel.score)
         binding.wordCount.text = getString(
-            R.string.word_count, 0, MAX_NO_OF_WORDS
+            R.string.word_count, viewModel.currentWordCount, MAX_NO_OF_WORDS
         )
     }
 
@@ -104,15 +104,6 @@ class GameFragment : Fragment() {
         } else {
             showFinalScoreDialog()
         }
-    }
-
-    /*
-     * Gets a random word for the list of words and shuffles the letters in it.
-     */
-    private fun getNextScrambledWord(): String {
-        val tempWord = allWordsList.random().toCharArray()
-        tempWord.shuffle()
-        return String(tempWord)
     }
 
     /*
@@ -172,5 +163,10 @@ class GameFragment : Fragment() {
      */
     private fun updateNextWordOnScreen() {
         binding.textViewUnscrambledWord.text = viewModel.currentScrambledWord
+        binding.wordCount.text = getString(
+            R.string.word_count, viewModel.currentWordCount,
+            MAX_NO_OF_WORDS
+        )
+        binding.score.text = getString(R.string.score, viewModel.score)
     }
 }
